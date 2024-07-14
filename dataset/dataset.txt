@@ -1,0 +1,3 @@
+Download dataset Home Credit Default
+application_train & application_test :https://www.kaggle.com/code/bolouki/home-credit-default-risk-eda-and-model/input
+
