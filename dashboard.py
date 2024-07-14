@@ -22,7 +22,7 @@ def main():
     """
     <style>
     .main {
-        background-color: #0B1A42;
+        background-color: #95040A;
         color: white;
     }
     
