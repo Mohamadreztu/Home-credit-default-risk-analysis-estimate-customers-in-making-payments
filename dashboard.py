@@ -43,12 +43,12 @@ def main():
     
     # Initial explanation section
     st.subheader("Sistem Analisis Risiko Pengajuan Kredit")
-    st.write(
-        """
-        Selamat datang di Dashboard Analisis Resiko Pengajuan Kredit. 
-        Silakan masukkan informasi calon kredit nasabah pada panel di sebelah kiri untuk memulai analisis.
-        """
-    )
+    st.markdown("""
+    <div class="custom-box">
+        <h4>Sistem ini menganalisis resiko pengajuan kredit berdasarkan berbagai kriteria calon nasabah.</h4>
+        <p>Masukkan data kriteria calon nasabah di sidebar, lalu klik tombol 'Prediksi Calon Nasabah' untuk melihat status pengajuan kredit.</p>
+    </div>
+    """, unsafe_allow_html=True)
     
     # Sidebar inputs
     st.sidebar.header("Kriteria Calon Kredit Nasabah")
