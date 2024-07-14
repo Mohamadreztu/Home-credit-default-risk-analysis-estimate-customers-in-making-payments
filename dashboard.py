@@ -47,7 +47,6 @@ def main():
         sistem ini akan memproses dan menghasilkan prediksi kelayakan kreditnya.</p>
         <h6>Langkah-langkah penggunaan : </h6>
         <p> 1. Masukkan data kriteria calon nasabah di sidebar yang tersedia. Pastikan semua data yang dimasukkan lengkap dan akurat. 
-        Klik tombol "Prediksi Calon Nasabah". Sistem akan memproses data dan menampilkan hasilnya.
         <p> 2. Klik tombol "Prediksi Calon Nasabah". Sistem akan memproses data dan menampilkan hasilnya.
         
     </div>
