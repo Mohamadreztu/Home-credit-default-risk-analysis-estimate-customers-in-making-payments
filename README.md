@@ -1,2 +1,2 @@
-# Home-credit-default-risk-analysis-estimate-customers-in-making-payments
+# Home Credit Default Risk Analysis Estimate Customers in Making Payments
 Home Credit is currently using various statistical and machine learning methods to make these predictions, they're challenging Kagglers to help them unlock the full potential of their data. Doing so will ensure that clients capable of repayment are not rejected and that loans are given with a principal, maturity, and repayment.
