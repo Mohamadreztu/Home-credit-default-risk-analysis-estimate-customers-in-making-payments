@@ -25,40 +25,18 @@ def main():
         background-color: #95040A;
         color: white;
     }
-    .custom-box {
-        border: 2px solid white;
-        padding: 20px;
-        margin: 10px 0;
-        border-radius: 10px;
-        background-color: #222222;
-    }
-    .custom-title {
-        color: white;
-        text-align: center;
-    }
-    .custom-subheader {
-        color: white;
-    }
+    
     </style>
     """,
     unsafe_allow_html=True
-    )
+)
 
     # Create title and header
     st.markdown('<h2 class="custom-title">Dashboard Analisis Resiko Pengajuan Kredit</h2>', unsafe_allow_html=True)
+
     # Add an image below the title
     st.image('Background Dashboard.jpg', use_column_width=True)
-    
-    # Initial explanation section
-    st.subheader("Sistem Analisis Risiko Pengajuan Kredit")
-    st.write(
-        """
-        Selamat datang di Dashboard Analisis Resiko Pengajuan Kredit. 
-        Silakan masukkan informasi calon kredit nasabah pada panel di sebelah kiri untuk memulai analisis.
-        """
-    )
-    
-    # Sidebar inputs
+
     st.sidebar.header("Kriteria Calon Kredit Nasabah")
     NAME_INCOME_TYPE = st.sidebar.selectbox('Tipe Pemasukan', ['Bekerja', 'Pengusaha', 'Pensiunan', 'Pengangguran', 'Pelajar', 'Cuti Melahirkan', 'Pegawai Negeri', 'Staff Komersial'])
     AMT_ANNUITY = st.sidebar.number_input('Jumlah Angsuran Wajib', min_value=0, step=1)
@@ -162,19 +140,12 @@ def main():
         f"sudah terdaftar sejak {YEARS_REGISTRATION} tahun."
         )
         
-        # Clear the initial explanation and display the results
-        st.empty()
-        
         # Display prediction result
-        st.markdown('<div class="custom-box">', unsafe_allow_html=True)
-        st.subheader('<div class="custom-subheader">Detail Kriteria Nasabah:</div>', unsafe_allow_html=True)
+        st.subheader('Detail Kriteria Nasabah:')
         st.write(narrative)
-        st.markdown('</div>', unsafe_allow_html=True)
         
-        st.markdown('<div class="custom-box">', unsafe_allow_html=True)
-        st.subheader('<div class="custom-subheader">Status Pengajuan Kredit:</div>', unsafe_allow_html=True)
+        st.subheader('Status Pengajuan Kredit:')
         st.success(risk_status)
-        st.markdown('</div>', unsafe_allow_html=True)
-
+        
 if __name__ == '__main__':
     main()
