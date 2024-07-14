@@ -32,7 +32,7 @@ def main():
 )
 
     # Create title and header
-    st.title('Dashboard Prediksi Pengajuan Kredit')
+    st.title('Dashboard Analisis Resiko Pengajuan Kredit')
 
     # Add an image below the title
     st.image('Background Dashboard.jpg', use_column_width=True)
