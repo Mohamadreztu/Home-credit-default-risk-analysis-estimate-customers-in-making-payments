@@ -45,7 +45,8 @@ def main():
     st.markdown("""
     <div class="custom-box">
         <h4>Sistem ini menganalisis resiko pengajuan kredit berdasarkan berbagai kriteria calon nasabah.</h4>
-        <p>Masukkan data kriteria calon nasabah di sidebar, lalu klik tombol 'Prediksi Calon Nasabah' untuk melihat status pengajuan kredit.</p>
+        <p>Sistem ini dirancang untuk membantu Anda dalam menganalisis risiko pengajuan kredit secara lebih mudah dan akurat. Dengan memasukkan data kriteria calon nasabah di sidebar, 
+        sistem ini akan memproses dan menghasilkan prediksi kelayakan kreditnya.</p>
     </div>
     """, unsafe_allow_html=True)
     
