@@ -42,7 +42,6 @@ def main():
     st.image('Background Dashboard.jpg', use_column_width=True)
     
     # Initial explanation section
-    st.subheader("Sistem Analisis Risiko Pengajuan Kredit")
     st.markdown("""
     <div class="custom-box">
         <h4>Sistem ini menganalisis resiko pengajuan kredit berdasarkan berbagai kriteria calon nasabah.</h4>
