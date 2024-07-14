@@ -15,7 +15,7 @@ def credit_prediction(model, features):
 
 def main():
     # Set page config
-    st.set_page_config(page_title="Dashboard Prediksi Pengajuan Kredit", layout="wide")
+    st.set_page_config(page_title="Dashboard Analisis Resiko Pengajuan Kredit", layout="wide")
 
     # Add custom CSS
     st.markdown(
