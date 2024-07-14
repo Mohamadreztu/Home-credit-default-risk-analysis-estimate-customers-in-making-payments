@@ -30,6 +30,7 @@ def main():
         border: 2px solid #e0e0e0;
         border-radius: 10px;
         padding: 20px;
+        color: black;
     }
     .custom-title {
         color: white;
@@ -47,7 +48,7 @@ def main():
 
     # System information
     st.markdown("""
-    <div class="custom-box">
+    <div>
         <h4>Sistem ini menganalisis resiko pengajuan kredit berdasarkan berbagai kriteria calon nasabah.</h4>
         <p>Masukkan data kriteria calon nasabah di sidebar, lalu klik tombol 'Prediksi Calon Nasabah' untuk melihat status pengajuan kredit.</p>
     </div>
