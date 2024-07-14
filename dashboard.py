@@ -32,6 +32,13 @@ def main():
         border-radius: 10px;
         background-color: #222222;
     }
+    .custom-title {
+        color: white;
+        text-align: center;
+    }
+    .custom-subheader {
+        color: white;
+    }
     </style>
     """,
     unsafe_allow_html=True
@@ -160,12 +167,12 @@ def main():
         
         # Display prediction result
         st.markdown('<div class="custom-box">', unsafe_allow_html=True)
-        st.subheader('Detail Kriteria Nasabah:')
+        st.subheader('<div class="custom-subheader">Detail Kriteria Nasabah:</div>', unsafe_allow_html=True)
         st.write(narrative)
         st.markdown('</div>', unsafe_allow_html=True)
         
         st.markdown('<div class="custom-box">', unsafe_allow_html=True)
-        st.subheader('Status Pengajuan Kredit:')
+        st.subheader('<div class="custom-subheader">Status Pengajuan Kredit:</div>', unsafe_allow_html=True)
         st.success(risk_status)
         st.markdown('</div>', unsafe_allow_html=True)
 
