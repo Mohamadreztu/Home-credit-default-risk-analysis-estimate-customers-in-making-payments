@@ -42,7 +42,7 @@ def main():
     # Initial explanation section
     st.markdown("""
     <div class="custom-box">
-        <h5>Perhatian!</h5>
+        <h4>Perhatian!</h4>
         <p>Sistem ini dirancang untuk membantu Anda dalam menganalisis risiko pengajuan kredit secara lebih mudah dan akurat. Dengan memasukkan data kriteria calon nasabah di sidebar, 
         sistem ini akan memproses dan menghasilkan prediksi kelayakan kreditnya.</p>
         <h6>Langkah-langkah penggunaan : </h6>
