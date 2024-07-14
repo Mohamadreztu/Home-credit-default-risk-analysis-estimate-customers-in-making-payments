@@ -25,7 +25,15 @@ def main():
         background-color: #95040A;
         color: white;
     }
-    
+    .custom-box {
+        background-color: #f0f0f0;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        padding: 20px;
+    }
+    .custom-title {
+        color: white;
+    }
     </style>
     """,
     unsafe_allow_html=True
@@ -36,6 +44,14 @@ def main():
 
     # Add an image below the title
     st.image('Background Dashboard.jpg', use_column_width=True)
+
+    # System information
+    st.markdown("""
+    <div class="custom-box">
+        <h4>Sistem ini menganalisis resiko pengajuan kredit berdasarkan berbagai kriteria calon nasabah.</h4>
+        <p>Masukkan data kriteria calon nasabah di sidebar, lalu klik tombol 'Prediksi Calon Nasabah' untuk melihat status pengajuan kredit.</p>
+    </div>
+    """, unsafe_allow_html=True)
 
     st.sidebar.header("Kriteria Calon Kredit Nasabah")
     NAME_INCOME_TYPE = st.sidebar.selectbox('Tipe Pemasukan', ['Bekerja', 'Pengusaha', 'Pensiunan', 'Pengangguran', 'Pelajar', 'Cuti Melahirkan', 'Pegawai Negeri', 'Staff Komersial'])
@@ -115,10 +131,10 @@ def main():
         
         # Map the numeric prediction to descriptive risk categories
         risk_status_map = {
-            0: "LOW RISK",
-            1: "MEDIUM RISK",
-            2: "HIGH RISK",
-            3: "VERY HIGH RISK"
+            0: "BERESIKO RENDAH",
+            1: "BERESIKO MENENGAH",
+            2: "BERESIKO TINGGI",
+            3: "BERESIKO SANGAT TINGGI"
         }
         risk_status = risk_status_map.get(risk_status_num, "UNKNOWN RISK")
         
@@ -140,12 +156,14 @@ def main():
         f"sudah terdaftar sejak {YEARS_REGISTRATION} tahun."
         )
         
-        # Display prediction result
+        # Display prediction result inside a box
+        st.markdown('<div class="custom-box">', unsafe_allow_html=True)
         st.subheader('Detail Kriteria Nasabah:')
         st.write(narrative)
         
         st.subheader('Status Pengajuan Kredit:')
         st.success(risk_status)
+        st.markdown('</div>', unsafe_allow_html=True)
         
 if __name__ == '__main__':
     main()
