@@ -32,7 +32,7 @@ def main():
 )
 
     # Create title and header
-    st.title('Dashboard Analisis Resiko Pengajuan Kredit', font_size_hint=18)
+    st.markdown('<h1 class="custom-title">Dashboard Prediksi Pengajuan Kredit</h1>', unsafe_allow_html=True)
 
     # Add an image below the title
     st.image('Background Dashboard.jpg', use_column_width=True)
