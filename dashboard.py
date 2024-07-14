@@ -26,14 +26,10 @@ def main():
         color: white;
     }
     .custom-box {
-        background-color: #f0f0f0;
-        border: 2px solid #e0e0e0;
-        border-radius: 10px;
+        border: 2px solid white;
         padding: 20px;
-        color: black;
-    }
-    .custom-title {
-        color: white;
+        margin: 10px 0;
+        border-radius: 10px;
     }
     </style>
     """,
@@ -42,18 +38,19 @@ def main():
 
     # Create title and header
     st.markdown('<h2 class="custom-title">Dashboard Analisis Resiko Pengajuan Kredit</h2>', unsafe_allow_html=True)
-
     # Add an image below the title
     st.image('Background Dashboard.jpg', use_column_width=True)
-
-    # System information
-    st.markdown("""
-    <div>
-        <h4>Sistem ini menganalisis resiko pengajuan kredit berdasarkan berbagai kriteria calon nasabah.</h4>
-        <p>Masukkan data kriteria calon nasabah di sidebar, lalu klik tombol 'Prediksi Calon Nasabah' untuk melihat status pengajuan kredit.</p>
-    </div>
-    """, unsafe_allow_html=True)
-
+    
+    # Initial explanation section
+    st.subheader("Sistem Analisis Risiko Pengajuan Kredit")
+    st.write(
+        """
+        Selamat datang di Dashboard Analisis Resiko Pengajuan Kredit. 
+        Silakan masukkan informasi calon kredit nasabah pada panel di sebelah kiri untuk memulai analisis.
+        """
+    )
+    
+    # Sidebar inputs
     st.sidebar.header("Kriteria Calon Kredit Nasabah")
     NAME_INCOME_TYPE = st.sidebar.selectbox('Tipe Pemasukan', ['Bekerja', 'Pengusaha', 'Pensiunan', 'Pengangguran', 'Pelajar', 'Cuti Melahirkan', 'Pegawai Negeri', 'Staff Komersial'])
     AMT_ANNUITY = st.sidebar.number_input('Jumlah Angsuran Wajib', min_value=0, step=1)
@@ -132,10 +129,10 @@ def main():
         
         # Map the numeric prediction to descriptive risk categories
         risk_status_map = {
-            0: "BERESIKO RENDAH",
-            1: "BERESIKO MENENGAH",
-            2: "BERESIKO TINGGI",
-            3: "BERESIKO SANGAT TINGGI"
+            0: "LOW RISK",
+            1: "MEDIUM RISK",
+            2: "HIGH RISK",
+            3: "VERY HIGH RISK"
         }
         risk_status = risk_status_map.get(risk_status_num, "UNKNOWN RISK")
         
@@ -157,14 +154,19 @@ def main():
         f"sudah terdaftar sejak {YEARS_REGISTRATION} tahun."
         )
         
-        # Display prediction result inside a box
+        # Clear the initial explanation and display the results
+        st.empty()
+        
+        # Display prediction result
         st.markdown('<div class="custom-box">', unsafe_allow_html=True)
         st.subheader('Detail Kriteria Nasabah:')
         st.write(narrative)
+        st.markdown('</div>', unsafe_allow_html=True)
         
+        st.markdown('<div class="custom-box">', unsafe_allow_html=True)
         st.subheader('Status Pengajuan Kredit:')
         st.success(risk_status)
         st.markdown('</div>', unsafe_allow_html=True)
-        
+
 if __name__ == '__main__':
     main()
