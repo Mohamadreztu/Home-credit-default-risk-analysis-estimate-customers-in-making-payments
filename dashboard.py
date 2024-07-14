@@ -131,10 +131,10 @@ def main():
         
         # Map the numeric prediction to descriptive risk categories
         risk_status_map = {
-            0: "LOW RISK",
-            1: "MEDIUM RISK",
-            2: "HIGH RISK",
-            3: "VERY HIGH RISK"
+            0: "BERESIKO RENDAH",
+            1: "BERESIKO MENENGAH",
+            2: "BERESIKO TINGGI",
+            3: "BERESIKO SANGAT TINGGI"
         }
         risk_status = risk_status_map.get(risk_status_num, "UNKNOWN RISK")
         
