@@ -158,15 +158,11 @@ def main():
         st.empty()
         
         # Display prediction result
-        st.markdown('<div class="custom-box">', unsafe_allow_html=True)
         st.subheader('Detail Kriteria Nasabah:')
         st.write(narrative)
-        st.markdown('</div>', unsafe_allow_html=True)
         
-        st.markdown('<div class="custom-box">', unsafe_allow_html=True)
         st.subheader('Status Pengajuan Kredit:')
         st.success(risk_status)
-        st.markdown('</div>', unsafe_allow_html=True)
 
 if __name__ == '__main__':
     main()
