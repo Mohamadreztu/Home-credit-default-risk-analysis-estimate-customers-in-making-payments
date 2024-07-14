@@ -30,6 +30,7 @@ def main():
         padding: 20px;
         margin: 10px 0;
         border-radius: 10px;
+        background-color: #222222;
     }
     </style>
     """,
