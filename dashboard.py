@@ -37,7 +37,7 @@ def main():
     )
     
     # Add an image below the title
-    st.image('Background Dashboard.jpg', use_column_width=True)
+    st.image('Background Dashboard.jpg', use_container_width=True)
     
     # Initial explanation section
     st.markdown("""
