@@ -1,31 +1,17 @@
 import streamlit as st
 import pandas as pd
 import pickle
-import os
 
-# Load model with error handling
-try:
-    model_path = os.path.join('model', 'xgboost_model.pkl')
-    with open(model_path, 'rb') as f:
-        model = pickle.load(f)
-except FileNotFoundError:
-    st.error("Model file not found. Please ensure 'xgboost_model.pkl' exists in the 'model' directory.")
-    st.stop()
-except Exception as e:
-    st.error(f"Error loading model: {str(e)}")
-    st.stop()
+# Load model
+model = pickle.load(open('xgboost_model.pkl', 'rb'))
 
 # Define prediction function
 def credit_prediction(model, features):
-    try:
-        # Convert features to DataFrame
-        features_df = pd.DataFrame([features])
-        # Perform prediction
-        prediction = model.predict(features_df)
-        return prediction[0]
-    except Exception as e:
-        st.error(f"Prediction error: {str(e)}")
-        return None
+    # Convert features to DataFrame
+    features_df = pd.DataFrame([features])
+    # Perform prediction
+    prediction = model.predict(features_df)
+    return prediction[0]
 
 def main():
     # Set page config
@@ -50,11 +36,8 @@ def main():
     unsafe_allow_html=True
     )
     
-    # Add an image below the title (with error handling)
-    try:
-        st.image('Background Dashboard.jpg', use_container_width=True)
-    except FileNotFoundError:
-        st.warning("Background image not found. The app will continue without it.")
+    # Add an image below the title
+    st.image('Background Dashboard.jpg', use_container_width=True)
     
     # Initial explanation section
     st.markdown("""
@@ -65,6 +48,7 @@ def main():
         <h6>Langkah-langkah penggunaan : </h6>
         <p> 1. Masukkan data kriteria calon nasabah di sidebar yang tersedia. Pastikan semua data yang dimasukkan lengkap dan akurat. 
         <p> 2. Klik tombol "Prediksi Calon Nasabah". Sistem akan memproses data dan menampilkan hasilnya.
+        
     </div>
     """, unsafe_allow_html=True)
     
@@ -83,7 +67,7 @@ def main():
     REG_CITY_NOT_WORK_CITY = st.sidebar.checkbox('Tinggal di Perkotaan')
     YEARS_EMPLOYED = st.sidebar.number_input('Lama Bekerja (tahun)', min_value=0, step=1)
     RATE_OF_LOAN = st.sidebar.number_input('Tingkat Suku Bunga', min_value=0.0, step=0.01)
-    AGE_YEARS = st.sidebar.number_input('Usia (tahun)', min_value=0, step=1, format='%d')
+    AGE_YEARS = st.sidebar.number_input('Usia (tahun)', min_value=0, step=1, format='%d')  # Integer input
     YEARS_REGISTRATION = st.sidebar.number_input('Lama Registrasi (tahun)', min_value=0, step=1)
     EXT_SOURCE_1 = st.sidebar.number_input('Berikan Skor Status 1', min_value=0.0, step=0.01)
     EXT_SOURCE_2 = st.sidebar.number_input('Berikan Skor Status 2', min_value=0.0, step=0.01)
@@ -105,7 +89,7 @@ def main():
         'Sarjana': 'Higher education',
         'Gelar Akademis (S2-S3)': 'Academic degree'
     }
-    education_type_converted = education_mapping.get(NAME_EDUCATION_TYPE, 'Secondary / secondary special')
+    education_type_converted = education_mapping[NAME_EDUCATION_TYPE]
     
     working_mapping = {
         'Bekerja': 'Working',
@@ -117,7 +101,7 @@ def main():
         'Pegawai Negeri': 'State servant',
         'Staff Komersial': 'Commercial associate'
     }
-    working_type_converted = working_mapping.get(NAME_INCOME_TYPE, 'Working')
+    working_type_converted = working_mapping[NAME_INCOME_TYPE]
 
     # Collect features
     features_pred = {
@@ -145,43 +129,42 @@ def main():
     if st.sidebar.button('Prediksi Calon Nasabah'):
         risk_status_num = credit_prediction(model, features_pred)
         
-        if risk_status_num is not None:
-            # Map the numeric prediction to descriptive risk categories
-            risk_status_map = {
-                0: "BERESIKO RENDAH",
-                1: "BERESIKO MENENGAH",
-                2: "BERESIKO TINGGI",
-                3: "BERESIKO SANGAT TINGGI"
-            }
-            risk_status = risk_status_map.get(risk_status_num, "UNKNOWN RISK")
-            
-            # Display user inputs in a narrative format
-            narrative = (
-            f"Calon kredit nasabah dengan status pemasukan {NAME_INCOME_TYPE}, "
-            f"dan pendidikan terakhirnya adalah {NAME_EDUCATION_TYPE}, "
-            f"berjenis kelamin {CODE_GENDER}, "
-            f"total pendapatan bulanan {AMT_INCOME_TOTAL}, "
-            f"sebelumnya memiliki jumlah kredit {AMT_CREDIT}, "
-            f"nominal aset yang dimiliki {AMT_GOODS_PRICE}, "
-            f"memiliki jumlah anak {CNT_CHILDREN}, "
-            f"{'punya mobil' if FLAG_OWN_CAR else 'tidak punya mobil'}, "
-            f"{'punya properti' if FLAG_OWN_REALTY else 'tidak punya properti'}, "
-            f"{'tinggal di perkotaan' if REG_CITY_NOT_WORK_CITY else 'tidak tinggal di perkotaan'}, "
-            f"sudah bekerja {YEARS_EMPLOYED} tahun, "
-            f"tingkat suku bunga yang diharapkan {RATE_OF_LOAN}, "
-            f"usia {AGE_YEARS} tahun, "
-            f"sudah terdaftar sejak {YEARS_REGISTRATION} tahun."
-            )
-            
-            # Clear the initial explanation and display the results
-            st.empty()
-            
-            # Display prediction result
-            st.subheader('Detail Kriteria Nasabah:')
-            st.write(narrative)
-            
-            st.subheader('Status Pengajuan Kredit:')
-            st.success(risk_status)
+        # Map the numeric prediction to descriptive risk categories
+        risk_status_map = {
+            0: "BERESIKO RENDAH",
+            1: "BERESIKO MENENGAH",
+            2: "BERESIKO TINGGI",
+            3: "BERESIKO SANGAT TINGGI"
+        }
+        risk_status = risk_status_map.get(risk_status_num, "UNKNOWN RISK")
+        
+        # Display user inputs in a narrative format
+        narrative = (
+        f"Calon kredit nasabah dengan status pemasukan {NAME_INCOME_TYPE}, "
+        f"dan pendidikan terakhirnya adalah {NAME_EDUCATION_TYPE}, "
+        f"berjenis kelamin {CODE_GENDER}, "
+        f"total pendapatan bulanan {AMT_INCOME_TOTAL}, "
+        f"sebelumnya memiliki jumlah kredit {AMT_CREDIT}, "
+        f"nominal aset yang dimiliki {AMT_GOODS_PRICE}, "
+        f"memiliki jumlah anak {CNT_CHILDREN}, "
+        f"{'punya mobil' if FLAG_OWN_CAR else 'tidak punya mobil'}, "
+        f"{'punya properti' if FLAG_OWN_REALTY else 'tidak punya properti'}, "
+        f"{'tinggal di perkotaan' if REG_CITY_NOT_WORK_CITY else 'tidak tinggal di perkotaan'}, "
+        f"sudah bekerja {YEARS_EMPLOYED} tahun, "
+        f"tingkat suku bunga yang diharapkan {RATE_OF_LOAN}, "
+        f"usia {AGE_YEARS} tahun, "
+        f"sudah terdaftar sejak {YEARS_REGISTRATION} tahun."
+        )
+        
+        # Clear the initial explanation and display the results
+        st.empty()
+        
+        # Display prediction result
+        st.subheader('Detail Kriteria Nasabah:')
+        st.write(narrative)
+        
+        st.subheader('Status Pengajuan Kredit:')
+        st.success(risk_status)
 
 if __name__ == '__main__':
     main()
