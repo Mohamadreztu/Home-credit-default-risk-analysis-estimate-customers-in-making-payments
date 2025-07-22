@@ -3,7 +3,11 @@ import pandas as pd
 import pickle
 
 # Load model
-model = pickle.load(open('model/xgboost_model.pkl', 'rb'))
+import cloudpickle
+
+with open("xgboost_model.pkl", "rb") as f:
+    model = cloudpickle.load(f)
+
 
 # Define prediction function
 def credit_prediction(model, features):
