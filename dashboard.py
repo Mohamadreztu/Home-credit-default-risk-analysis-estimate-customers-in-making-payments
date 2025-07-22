@@ -1,17 +1,15 @@
 import streamlit as st
 import pandas as pd
-import pickle
+import joblib
 import os
 
-# Load model secara aman
+# Load model safely using joblib
 def load_model():
-    base_dir = os.path.dirname(__file__)
-    model_path = os.path.join(base_dir, 'model', 'xgboost_model.pkl')
+    model_path = os.path.join(os.path.dirname(__file__), 'model', 'xgboost_model.pkl')
     if not os.path.exists(model_path):
         st.error(f"Model tidak ditemukan di path: {model_path}")
         st.stop()
-    with open(model_path, 'rb') as f:
-        model = pickle.load(f)
+    model = joblib.load(model_path)
     return model
 
 model = load_model()
@@ -55,6 +53,7 @@ def main():
     </div>
     """, unsafe_allow_html=True)
 
+    # Sidebar inputs
     st.sidebar.header("Kriteria Calon Kredit Nasabah")
     NAME_INCOME_TYPE = st.sidebar.selectbox('Tipe Pemasukan', ['Bekerja', 'Pengusaha', 'Pensiunan', 'Pengangguran', 'Pelajar', 'Cuti Melahirkan', 'Pegawai Negeri', 'Staff Komersial'])
     AMT_ANNUITY = st.sidebar.number_input('Jumlah Angsuran Wajib', min_value=0, step=1)
@@ -75,6 +74,7 @@ def main():
     EXT_SOURCE_2 = st.sidebar.number_input('Skor Status 2', min_value=0.0, step=0.01)
     EXT_SOURCE_3 = st.sidebar.number_input('Skor Status 3', min_value=0.0, step=0.01)
 
+    # Preprocessing input values
     gender_code = 'M' if CODE_GENDER == 'Laki-laki' else 'F'
     flag_own_car = int(FLAG_OWN_CAR)
     flag_own_realty = int(FLAG_OWN_REALTY)
