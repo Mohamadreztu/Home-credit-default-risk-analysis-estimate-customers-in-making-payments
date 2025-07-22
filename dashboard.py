@@ -1,12 +1,9 @@
 import streamlit as st
 import pandas as pd
-import joblib
+import pickle
 
-# Load Model
-model = joblib.load('model/xgboost_model.pkl')
-
-
-model = load_model()
+# Load model
+model = pickle.load(open('model/xgboost_model.pkl', 'rb'))
 
 # Define prediction function
 def credit_prediction(model, features):
@@ -18,44 +15,28 @@ def credit_prediction(model, features):
 
 def main():
     # Set page config
-    st.set_page_config(page_title="Dashboard Analisis Resiko Pengajuan Kredit", layout="wide")
+    st.set_page_config(page_title="Dashboard Prediksi Pengajuan Kredit", layout="wide")
 
     # Add custom CSS
     st.markdown(
     """
     <style>
     .main {
-        background-color: #95040A;
+        background-color: #0B1A42;
         color: white;
     }
-    .custom-box {
-        border: 2px solid white;
-        padding: 20px;
-        margin: 10px 0;
-        border-radius: 10px;
-    }
+    
     </style>
     """,
     unsafe_allow_html=True
-    )
-    
+)
+
+    # Create title and header
+    st.title('Dashboard Prediksi Pengajuan Kredit')
+
     # Add an image below the title
-    st.image('Background Dashboard.jpg', use_container_width=True)
-    
-    # Initial explanation section
-    st.markdown("""
-    <div class="custom-box">
-        <h4>Perhatian!</h4>
-        <p>Sistem ini dirancang untuk membantu Anda dalam menganalisis risiko pengajuan kredit secara lebih mudah dan akurat. Dengan memasukkan data kriteria calon nasabah di sidebar, 
-        sistem ini akan memproses dan menghasilkan prediksi kelayakan kreditnya.</p>
-        <h6>Langkah-langkah penggunaan : </h6>
-        <p> 1. Masukkan data kriteria calon nasabah di sidebar yang tersedia. Pastikan semua data yang dimasukkan lengkap dan akurat. 
-        <p> 2. Klik tombol "Prediksi Calon Nasabah". Sistem akan memproses data dan menampilkan hasilnya.
-        
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # Sidebar inputs
+    st.image('Background Dashboard.jpg', use_column_width=True)
+
     st.sidebar.header("Kriteria Calon Kredit Nasabah")
     NAME_INCOME_TYPE = st.sidebar.selectbox('Tipe Pemasukan', ['Bekerja', 'Pengusaha', 'Pensiunan', 'Pengangguran', 'Pelajar', 'Cuti Melahirkan', 'Pegawai Negeri', 'Staff Komersial'])
     AMT_ANNUITY = st.sidebar.number_input('Jumlah Angsuran Wajib', min_value=0, step=1)
@@ -134,10 +115,10 @@ def main():
         
         # Map the numeric prediction to descriptive risk categories
         risk_status_map = {
-            0: "BERESIKO RENDAH",
-            1: "BERESIKO MENENGAH",
-            2: "BERESIKO TINGGI",
-            3: "BERESIKO SANGAT TINGGI"
+            0: "LOW RISK",
+            1: "MEDIUM RISK",
+            2: "HIGH RISK",
+            3: "VERY HIGH RISK"
         }
         risk_status = risk_status_map.get(risk_status_num, "UNKNOWN RISK")
         
@@ -159,15 +140,12 @@ def main():
         f"sudah terdaftar sejak {YEARS_REGISTRATION} tahun."
         )
         
-        # Clear the initial explanation and display the results
-        st.empty()
-        
         # Display prediction result
         st.subheader('Detail Kriteria Nasabah:')
         st.write(narrative)
         
         st.subheader('Status Pengajuan Kredit:')
         st.success(risk_status)
-
+        
 if __name__ == '__main__':
     main()
