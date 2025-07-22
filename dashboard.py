@@ -2,28 +2,8 @@ import streamlit as st
 import pandas as pd
 import pickle
 
-# Load model
-@st.cache_data
-def load_model():
-    model_path = 'model/xgboost_model.pkl'
-    
-    if not os.path.exists(model_path):
-        st.error(f"Model file not found at: {model_path}")
-        st.stop()
-
-    try:
-        # Coba load dengan joblib
-        model = joblib.load(model_path)
-        return model
-    except Exception as e_joblib:
-        st.warning("Gagal load dengan joblib. Mencoba XGBoost native loader...")
-        try:
-            model = xgb.XGBClassifier()
-            model.load_model(model_path)
-            return model
-        except Exception as e_xgb:
-            st.error(f"Gagal memuat model.\nJoblib error: {e_joblib}\nXGBoost error: {e_xgb}")
-            st.stop()
+# Load Model
+model = pickle.load(open('xgboost_model.pkl', 'rb'))
 
 model = load_model()
 
