@@ -1,9 +1,10 @@
 import streamlit as st
 import pandas as pd
-import pickle
+import joblib
 
 # Load Model
-model = pickle.load(open('model/xgboost_model.pkl', 'rb')) 
+model = joblib.load('model/xgboost_model.pkl')
+
 
 model = load_model()
 
