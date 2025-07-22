@@ -5,7 +5,7 @@ import pickle
 # Load model
 import cloudpickle
 
-with open("xgboost_model_new.pkl", "rb") as f:
+with open("model/xgboost_model_new.pkl", "rb") as f:
     model = cloudpickle.load(f)
 
 
