@@ -4,7 +4,7 @@ import pickle
 import joblib
 
 # Load model
-model = joblib.load('model/xgboost_model.pkl')
+model = pickle.load(open('model/xgboost_model.pkl', 'rb'))
 
 # Define prediction function
 def credit_prediction(model, features):
