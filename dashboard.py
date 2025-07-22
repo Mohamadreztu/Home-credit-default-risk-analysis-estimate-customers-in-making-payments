@@ -3,7 +3,7 @@ import pandas as pd
 import pickle
 
 # Load Model
-model = pickle.load(open('xgboost_model.pkl', 'rb'))
+model = pickle.load(open('model/xgboost_model.pkl', 'rb')) 
 
 model = load_model()
 
